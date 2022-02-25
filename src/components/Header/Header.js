@@ -1,36 +1,46 @@
 import { createTheme, MenuItem, TextField, ThemeProvider } from '@mui/material'
 import React from 'react'
 import "./Header.css"
+import categories from '../../data/category'
 
-const Header = () => {
+const Header = ({ category, setCategory ,word, setWord}) => {
 
     const darkTheme = createTheme({
         palette: {
             primary: {
-                main: "#000000"
+                main: "#fff",
             },
-            mode: 'dark',
+            mode: "dark",
         },
     });
 
     return (
         <div className='header'>
             <span className='title'>SHABDKOSH</span>
+            <span className='below-text'>Your word:- {word? word: "....."}</span>
             <div className='inputs'>
                 <ThemeProvider theme={darkTheme}>
-                    <TextField id="filled-basic" label="Filled" variant="filled" />
+                    <TextField 
+                        className="search" 
+                        label="Search a word"  
+                        label="Standard" 
+                        value={word}
+                        onChange={(e) => setWord(e.target.value)}
+                        variant="standard" 
+                    />
                     <TextField
-                        id="filled-select-currency"
                         select
-                        label="Select"
-                        helperText="Please select your currency"
-                        variant="filled"
+                        label="Language"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
                     >
-                        
-                            <MenuItem >
-                                English
-                            </MenuItem>
-                     
+                        {
+                            categories.map((option) => (
+                                <MenuItem key={option.label} value={option.label}>{option.value}</MenuItem>
+                            ))
+                        }
+
+
                     </TextField>
                 </ThemeProvider>
             </div>
